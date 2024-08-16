@@ -23,7 +23,7 @@ function ListaCategorias() {
     }, [categorias.length]);
 
     return (
-        <>
+        <div className="flex flex-col justify-evenly">
             {categorias.length === 0 && (
                 <Dna
                     visible={true}
@@ -45,7 +45,7 @@ function ListaCategorias() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 
