@@ -4,6 +4,7 @@ import Categoria from '../../../models/Categoria';
 import { Dna } from 'react-loader-spinner';
 import CardCategorias from '../cardCategorias/CardCategorias';
 import { buscar } from '../../../services/Service';
+import { toastAlerta } from '../../../util/toastAlerta';
 
 function ListaCategorias() {
     const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -13,7 +14,7 @@ function ListaCategorias() {
             await buscar('/categorias', setCategorias);
         } catch (error: any) {
             if (error.toString().includes('403')) {
-                alert('O token expirou, favor logar novamente')
+                toastAlerta('Nenhuma categoria encontrada. Verifique se há categorias cadastradas.', 'erro')
             }
         }
     }

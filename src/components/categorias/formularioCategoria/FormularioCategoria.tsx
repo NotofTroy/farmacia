@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { atualizar, buscar, cadastrar } from "../../../services/Service";
 import Categoria from "../../../models/Categoria";
+import { toastAlerta } from "../../../util/toastAlerta";
 
 function FormularioCategoria() {
 
@@ -13,52 +14,48 @@ function FormularioCategoria() {
 
     async function buscarPorId(id: string) {
         await buscar(`/categorias/${id}`, setCategoria);
-    }
+    };
 
     useEffect(() => {
         if (id !== undefined) {
             buscarPorId(id)
         }
-    }, [id])
+    }, [id]);
 
     function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
         setCategoria({
             ...categoria,
             [e.target.name]: e.target.value
-        })
-
-        console.log(JSON.stringify(categoria))
-    }
+        });
+    };
 
     async function gerarNovaCategoria(e: ChangeEvent<HTMLFormElement>) {
-        e.preventDefault()
+        e.preventDefault();
 
         if (id !== undefined) {
             try {
-                await atualizar(`/categorias`, categoria, setCategoria)
-
-                alert('Categoria atualizada com sucesso!')
-                retornar()
+                await atualizar(`/categorias`, categoria, setCategoria);
+                toastAlerta('Categoria atualizada com sucesso!', 'sucesso');
+                retornar();
 
             } catch (error: any) {
-                alert('Erro ao atualizar a categoria')
+                toastAlerta('Erro ao atualizar categoria. Verifique se preencheu todos os campos obrigatórios.', 'erro');
             }
 
         } else {
             try {
-                await cadastrar(`/categorias`, categoria, setCategoria)
-
-                alert('Categoria cadastrada com sucesso!')
+                await cadastrar(`/categorias`, categoria, setCategoria);
+                toastAlerta('Categoria cadastrada com sucesso!', 'sucesso');
 
             } catch (error: any) {
-                alert('Erro ao cadastrar a categoria')
+                toastAlerta('Erro ao cadastrar categoria. Verifique se preencheu todos os campos obrigatórios.', 'erro');
             }
         }
-        retornar()
+        retornar();
     }
 
     function retornar() {
-        navigate("/categorias")
+        navigate("/categorias");
     }
 
     return (

@@ -7,10 +7,13 @@ import Products from './pages/products/Products';
 import ListaCategorias from './components/categorias/listaCategorias/ListaCategorias';
 import FormularioCategoria from './components/categorias/formularioCategoria/FormularioCategoria';
 import DeletarCategoria from './components/categorias/deletarCategoria/DeletarCategoria';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/ReactToastify.css';
 
 function App() {
   return (
     <>
+      <ToastContainer />
       <BrowserRouter>
         <Navbar />
         <div className='flex justify-evenly min-h-[80vh]'>

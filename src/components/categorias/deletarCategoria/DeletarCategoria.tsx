@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { buscar, deletar } from '../../../services/Service'
 import Categoria from '../../../models/Categoria'
+import { toastAlerta } from '../../../util/toastAlerta';
 
 function DeletarCategoria() {
     const [categoria, setCategoria] = useState<Categoria>({} as Categoria);
@@ -12,34 +13,34 @@ function DeletarCategoria() {
 
     async function buscarPorId(id: string) {
         try {
-            await buscar(`/categorias/${id}`, setCategoria)
+            await buscar(`/categorias/${id}`, setCategoria);
         } catch (error: any) {
-            alert('Erro ao deletar categoria.')
+            toastAlerta('Erro ao buscar categoria, verifique se ela existe.', 'erro');
         }
-    }
+    };
 
     useEffect(() => {
         if (id !== undefined) {
-            buscarPorId(id)
+            buscarPorId(id);
         }
-    }, [id])
+    }, [id]);
 
     function retornar() {
-        navigate("/categorias")
-    }
+        navigate("/categorias");
+    };
 
     async function deletarTema() {
         try {
             await deletar(`/categorias/${id}`)
-
-            alert('Categoria apagada com sucesso')
+            toastAlerta('Categoria deletada com sucesso!', 'sucesso');
 
         } catch (error) {
-            alert('Erro ao apagar a categoria')
+            toastAlerta('Erro ao apagar categoria. Verifique se ela existe.', 'erro');
         }
 
-        retornar()
-    }
+        retornar();
+    };
+
     return (
         <div className='container w-1/3 mx-auto'>
             <h1 className='text-4xl text-center my-4'>Deletar categoria</h1>
@@ -60,4 +61,4 @@ function DeletarCategoria() {
     )
 }
 
-export default DeletarCategoria
+export default DeletarCategoria;
